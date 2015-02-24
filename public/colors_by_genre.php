@@ -13,7 +13,7 @@ if (isset($_GET['genre']) && $_GET['genre']) {
     if (sizeof($genre) > 0) {
         $genre_id = $genre['0']['id'];
         
-        $albums = $file_db->query('SELECT albums.*, albums_genres.* FROM albums, albums_genres WHERE albums_genres.album_id = albums.id AND albums_genres.genre_id = ' . $genre_id . ' ORDER BY release_date ASC, hex_value ASC');
+        $albums = $file_db->query('SELECT albums.*, albums_genres.* FROM albums, albums_genres WHERE albums_genres.album_id = albums.id AND albums_genres.genre_id = ' . $genre_id . ' ORDER BY hex_value ASC');
         
         foreach ($albums as $album) {
             $color = sanitize_hex($album['hex_value']);
