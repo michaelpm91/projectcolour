@@ -7,6 +7,12 @@ var colourIndex=["#CC0000","#FF7900","#689C00","#80004D"];
 var colourInt = setInterval(function(){changeColour()},3000);
 
  
+ $("#genre-select").on('change', function(e) {
+     if ($("#genre-select").val()) {
+         alert("Selected "+$("#genre-select").val());
+     }
+ });
+ 
  function changeColour(){
  
 

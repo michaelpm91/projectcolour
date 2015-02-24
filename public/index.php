@@ -73,34 +73,33 @@ Dotenv::load("../");
 		<div id="genre">
 		
 		<form>
-		<label for="genre-select">Select genre&nbsp;
+		<label for="genre-select">Genre: 
 		
 			
 				<select id="genre-select">
 					
-<option>Alternative/Indie</option>
-<option>Blues</option>
-<option>Cast Recordings/Cabaret</option>
-<option>Christian/Gospel</option>
-<option>Children's</option>
-<option>Classical/Opera</option>
-<option>Comedy/Spoken Word</option>
-<option>Country</option>
-<option>Electronica/Dance</option>
-<option>Folk</option>
-<option>Instrumental</option>
-<option>Jazz</option>
-<option>Latin</option>
-<option>New Age</option>
-<option>Pop</option>
-<option>Rap/Hip Hop</option>
-<option>Reggae/Ska</option>
-<option>Rock</option>
-<option>Seasonal</option>
-<option>Soul/R&B</option>
-<option>Soundtracks</option>
-<option>Vocals</option>
-<option>World</option>
+<option value="" selected>Select...</option>
+<option value="alternative">Alternative</option>
+<option value="cabaret">Cabaret</option>
+<option value="children">Children</option>
+<option value="classical">Classical</option>
+<option value="comedy">Comedy</option>
+<option value="country">Country</option>
+<option value="dance">Dance</option>
+<option value="folk">Folk</option>
+<option value="gospel">Gospel</option>
+<option value="instrumental">Instrumental</option>
+<option value="jazz">Jazz</option>
+<option value="latin">Latin</option>
+<option value="new age">New age</option>
+<option value="pop">Pop</option>
+<option value="rap">Rap</option>
+<option value="reggae">Reggae</option>
+<option value="rock">Rock</option>
+<option value="soul">Soul</option>
+<option value="soundtrack">Soundtrack</option>
+<option value="world">World</option>
+
 			</select>
 			</label>
 			</form>
