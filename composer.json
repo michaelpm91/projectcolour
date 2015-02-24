@@ -11,6 +11,7 @@
   ],
   "require": {
     "dandelionmood/lastfm": "dev-master",
-    "vlucas/phpdotenv": "1.1.*@dev"
+    "vlucas/phpdotenv": "1.1.*@dev",
+    "league/color-extractor": "0.1.*"
   }
 }
