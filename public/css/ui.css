@@ -114,7 +114,9 @@ strong{
 
 #data{
 	height:200px;
-	background:#ccc;
+    width: auto;
+    border: 1px solid #ccc;
+    overflow: hidden;
 }
 
 #key{

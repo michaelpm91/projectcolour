@@ -80,6 +80,7 @@ Dotenv::load("../");
 					
 <option value="" selected>Select...</option>
 <option value="alternative">Alternative</option>
+<option value="blues">Blues</option>
 <option value="cabaret">Cabaret</option>
 <option value="children">Children</option>
 <option value="classical">Classical</option>
@@ -112,11 +113,12 @@ Dotenv::load("../");
 		
 		</div>
 	
-		<div id="key">
+<!--		<div id="key">
 			<div id="start"><span>1995</span></div>
 			<div id="mid"><span>2005</span></div>
 			<div id="end"><span>2015</span></div>
-		</div>
+		</div> 
+//-->
 	
 	
 	</div>
