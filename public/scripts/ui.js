@@ -9,9 +9,30 @@ var colourInt = setInterval(function(){changeColour()},3000);
  
  $("#genre-select").on('change', function(e) {
      if ($("#genre-select").val()) {
-         alert("Selected "+$("#genre-select").val());
+         
+         $.ajax({
+             type: "GET",
+             url: "colors_by_genre.php",
+             data: { "genre": $("#genre-select").val()},
+             success: function(data) {
+                 redrawStripe(data);
+             }
+         });
      }
  });
+
+ function redrawStripe(colorsObject) {
+     var colors = colorsObject.colors;
+     var width = 830 / colors.length;
+     $("#data").fadeOut(400, function(){
+         $("#data").empty();
+         $.each(colors, function(i, color) {
+             $('<div style="display: inline-block; width: '+parseInt(width)+'px; height: 200px; background: '+color+'"></div>').appendTo($("#data"));
+             $("#data").fadeIn(400);
+         });
+     });
+     
+ }
  
  function changeColour(){
  
