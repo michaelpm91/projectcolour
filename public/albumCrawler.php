@@ -6,7 +6,7 @@
  * Time: 14:15
  */
 
-//set_time_limit(10);
+set_time_limit(120);
 
 use League\ColorExtractor\Client as ColorExtractor;
 
@@ -21,6 +21,7 @@ function crawl($limit = 1000, $genre){
             'limit' => $limit
         )
     );
+    file_put_contents('output_'.date('d-m-Y---h_i_s').'.json', json_encode($albums));
 
     foreach($albums->topalbums->album as $album){
 
@@ -47,8 +48,11 @@ function getImageAverageColour($url){
     if($ext == 'jpg' || $ext == 'jpeg') {
         $imageHex = $client->loadJpeg($url)->extract()['0'];
     }else if($ext == 'png'){
-        //$imageHex = $client->loadPng($url);
-        $imageHex = "#000000";
+        $filename = rand(1,10000000000000).'.png';
+        file_put_contents($filename, file_get_contents($url));
+        exec('convert -strip /Users/pattem92/hackday/projectcolour/public/'.$filename.' /Users/pattem92/hackday/projectcolour/public/'.$filename);
+        $imageHex = $client->loadPng($filename)->extract()['0'];
+
     }else if($ext == 'gif'){
         $imageHex = $client->loadGif($url)->extract()['0'];
     }
@@ -56,4 +60,4 @@ function getImageAverageColour($url){
     return $imageHex;
 }
 
-crawl(10, 'blues');
+crawl(100, 'folk');

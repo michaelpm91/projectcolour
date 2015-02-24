@@ -132,7 +132,9 @@ function find_large_image_url($images) {
 
 function insert_album($album, $hex_value) {
     global $file_db;
-    insert_lastfm_album($album, $hex_value, $file_db);
+    if($hex_value != 'skip') {
+        insert_lastfm_album($album, $hex_value, $file_db);
+    }
 }
     
 ?>
