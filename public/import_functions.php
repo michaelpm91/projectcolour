@@ -41,7 +41,7 @@ function insert_lastfm_genre($genre, $file_db) {
     
     $stmt->bindValue(':name', $genre->tag->name);
 
-    $content = !empty($genre->tag->wiki) ? $genre->tag->wiki->content : " ";
+    $content = isset($genre->tag->wiki->content) ? $genre->tag->wiki->content : " ";
     $stmt->bindValue(':blurb', $content);
     
     $stmt->execute();
