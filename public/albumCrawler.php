@@ -6,6 +6,8 @@
  * Time: 14:15
  */
 
+//set_time_limit(10);
+
 use League\ColorExtractor\Client as ColorExtractor;
 
 require 'import_functions.php';
@@ -30,8 +32,8 @@ function crawl($limit = 1000, $genre){
             )
         );
         $hexcode = getImageAverageColour(find_large_image_url($album_info->album->image));
-        print_r($album_info);
-        insert_album($album_info, '#'.$hexcode);
+        //print_r($album_info);
+        insert_album($album_info, $hexcode);
     }
 
 
@@ -40,7 +42,15 @@ function crawl($limit = 1000, $genre){
 function getImageAverageColour($url){
 
     $client = new ColorExtractor;
-    $image = $client->loadJpeg($url);
+    $ext = strtolower(pathinfo($url, PATHINFO_EXTENSION));
+    echo $ext;
+    if($ext == 'jpg' || $ext == 'jpeg') {
+        $image = $client->loadJpeg($url);
+    }else if($ext == 'png'){
+        $image = $client->loadPng($url);
+    }else if($ext == 'gif'){
+        $image = $client->loadGif($url);
+    }
     return $image->extract()['0'];
 }
 
