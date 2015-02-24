@@ -18,10 +18,8 @@ $file_db = new PDO('sqlite:colour.sqlite3');
 
 // Inserts Last.fm artist
 // Return value: artist id
-function insert_lastfm_artist($artist) {
-    
-    global $file_db;
-            
+function insert_lastfm_artist($artist, $file_db) {
+                
     $insert = "INSERT INTO artists (name, mbid) 
                 VALUES (:name, :mbid)";
     $stmt = $file_db->prepare($insert);
@@ -34,10 +32,28 @@ function insert_lastfm_artist($artist) {
     return $file_db->lastInsertId();
 }
 
+// Inserts Last.fm genre
+// Return value: genre id
+function insert_lastfm_genre($genre, $file_db) {
+                
+    $insert = "INSERT INTO genres (title, blurb) VALUES (:name, :blurb)";
+    $stmt = $file_db->prepare($insert);
+    
+    $stmt->bindValue(':name', $genre->tag->name);
+
+    $content = !empty($genre->tag->wiki) ? $genre->tag->wiki->content : " ";
+    $stmt->bindValue(':blurb', $content);
+    
+    $stmt->execute();
+    
+    return $file_db->lastInsertId();
+}
+
 // Find artist in database. If not present, inserts artist
 // Return value: artist id
-function find_or_insert_artist($artist_name) {
-    global $file_db;
+function find_or_insert_artist($artist_name, $file_db) {
+    
+    $lastfm = new \Dandelionmood\LastFm\LastFm( $_ENV['LAST_FM_API_Key'], $_ENV['LAST_FM_API_Secret'] );
     
     $result = $file_db->query('SELECT * FROM artists WHERE name = "' . $artist_name . '"' )->fetchAll();
     
@@ -49,17 +65,18 @@ function find_or_insert_artist($artist_name) {
                 'artist' => $artist_name
             )
         );
-        return insert_lastfm_artist($artist);
+        return insert_lastfm_artist($artist, $file_db);
     }
 }
 
 // Find genre in database. If not present, inserts genre
 // Return value: genre id
-function find_or_insert_genre($genre_name) {
-    global $file_db;
+function find_or_insert_genre($genre_name, $file_db) {
     
-    $result = $file_db->query('SELECT * FROM genre WHERE title = "' . $genre_name . '"' )->fetchAll();
+    $lastfm = new \Dandelionmood\LastFm\LastFm( $_ENV['LAST_FM_API_Key'], $_ENV['LAST_FM_API_Secret'] );
     
+    $result = $file_db->query('SELECT * FROM genres WHERE title = "' . $genre_name . '"' )->fetchAll();
+        
     if (sizeof($result) > 0) {
         return $result['0']['id'];
     } else {
@@ -68,18 +85,16 @@ function find_or_insert_genre($genre_name) {
                 'tag' => $genre_name
             )
         );
-        return insert_lastfm_genre($genre);
+        return insert_lastfm_genre($genre, $file_db);
     }
 }
 
 // Inserts Last.fm album
 // Return value: album id
-function insert_lastfm_album($album) {
+function insert_lastfm_album($album, $hex_value, $file_db) {
     
-    global $file_db;
-            
     // Get artist
-    $artist_id = find_or_insert_artist($album->album->artist);
+    $artist_id = find_or_insert_artist($album->album->artist, $file_db);
                 
     $insert = "INSERT INTO albums (title, artist_name, artist_id, release_date, mbid, image_url, hex_value) 
                 VALUES (:title, :artist_name, :artist_id, :release_date, :mbid, :image_url, :hex_value)";
@@ -91,11 +106,27 @@ function insert_lastfm_album($album) {
     $stmt->bindValue(':release_date', $album->album->releasedate);
     $stmt->bindValue(':mbid', $album->album->mbid);
     $stmt->bindValue(':image_url', find_large_image_url($album->album->image));
-    $stmt->bindValue(':hex_value', '');
+    $stmt->bindValue(':hex_value', $hex_value   );
     
     $stmt->execute();
     
-    return $file_db->lastInsertId();
+    $album_id = $file_db->lastInsertId();
+    
+    // Get genres
+    foreach($album->album->toptags->tag as $tag) {
+        $genre_id = find_or_insert_genre($tag->name, $file_db);
+
+        $insert = "INSERT INTO albums_genres (album_id, genre_id)
+                    VALUES (:album_id, :genre_id)";
+        $stmt = $file_db->prepare($insert);
+
+        $stmt->bindValue(':album_id', $album_id);
+        $stmt->bindValue(':genre_id', $genre_id);
+
+        $stmt->execute();
+    }
+    
+    return $album_id;
 }
 
 function find_large_image_url($images) {
@@ -105,17 +136,9 @@ function find_large_image_url($images) {
     return null;
 }
 
-//$result = find_or_insert_artist("Pink Floyd");
-
-$pink_floyd = $lastfm->album_getInfo(
-    array(
-        'album' => 'Believe',
-        'artist' => 'Cher'
-    )
-);
-
-
-
-print_r($pink_floyd);
+function insert_album($album, $hex_value) {
+    global $file_db;
+    insert_lastfm_album($album, $hex_value, $file_db);
+}
     
 ?>
