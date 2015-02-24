@@ -38,7 +38,7 @@
 
     $file_db->exec("CREATE TABLE IF NOT EXISTS genres (
                     id INTEGER PRIMARY KEY, 
-                    tite TEXT, 
+                    title TEXT, 
                     blurb TEXT)");
 
     $file_db->exec("CREATE TABLE IF NOT EXISTS albums_genres (
