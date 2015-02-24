@@ -2,3 +2,5 @@
 /.idea
 .env
 /public/*.sqlite3
+.DS_Store
+composer.lock
