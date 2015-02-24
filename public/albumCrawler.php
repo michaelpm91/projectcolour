@@ -45,13 +45,15 @@ function getImageAverageColour($url){
     $ext = strtolower(pathinfo($url, PATHINFO_EXTENSION));
     echo $ext;
     if($ext == 'jpg' || $ext == 'jpeg') {
-        $image = $client->loadJpeg($url);
+        $imageHex = $client->loadJpeg($url)->extract()['0'];
     }else if($ext == 'png'){
-        $image = $client->loadPng($url);
+        //$imageHex = $client->loadPng($url);
+        $imageHex = "#000000";
     }else if($ext == 'gif'){
-        $image = $client->loadGif($url);
+        $imageHex = $client->loadGif($url)->extract()['0'];
     }
-    return $image->extract()['0'];
+    //return $image->extract()['0'];
+    return $imageHex;
 }
 
 crawl(10, 'blues');
