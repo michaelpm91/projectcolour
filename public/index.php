@@ -6,4 +6,8 @@
  * Time: 11:27
  */
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
+
+Dotenv::load("../");
+
+echo $_ENV['LAST_FM_API_Key'];

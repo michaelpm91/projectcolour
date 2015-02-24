@@ -10,6 +10,7 @@
     }
   ],
   "require": {
-    "dandelionmood/lastfm": "dev-master"
+    "dandelionmood/lastfm": "dev-master",
+    "vlucas/phpdotenv": "1.1.*@dev"
   }
 }
