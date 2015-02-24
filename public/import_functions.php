@@ -7,12 +7,6 @@ Dotenv::load("../");
 
 $lastfm = new \Dandelionmood\LastFm\LastFm( $_ENV['LAST_FM_API_Key'], $_ENV['LAST_FM_API_Secret'] );
 
-$pink_floyd = $lastfm->artist_getInfo(
-    array(
-        'artist' => 'Pink Floyd'
-    )
-);
-
 $file_db = new PDO('sqlite:colour.sqlite3');
 
 
