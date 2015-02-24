@@ -41,10 +41,10 @@
                     tite TEXT, 
                     blurb TEXT)");
 
-    $file_db->exec("CREATE TABLE IF NOT EXISTS albums_artists (
+    $file_db->exec("CREATE TABLE IF NOT EXISTS albums_genres (
                     id INTEGER PRIMARY KEY, 
                     album_id INT, 
-                    artist_id INT)");
+                    genre_id INT)");
 
    // Close file db connection
     $file_db = null;
