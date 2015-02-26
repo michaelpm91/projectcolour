@@ -1,0 +1,6 @@
+/vendor
+/.idea
+.env
+/old/public/*.sqlite3
+.DS_Store
+composer.lock

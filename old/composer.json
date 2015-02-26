@@ -1,0 +1,17 @@
+{
+  "name": "vendor_name/package_name",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Michael Patterson-Muir",
+      "email": "michael.patterson-muir@bbc.co.uk"
+    }
+  ],
+  "require": {
+    "dandelionmood/lastfm": "dev-master",
+    "vlucas/phpdotenv": "1.1.*@dev",
+    "league/color-extractor": "0.1.*"
+  }
+}
