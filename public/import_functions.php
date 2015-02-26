@@ -7,7 +7,7 @@ Dotenv::load("../");
 
 $lastfm = new \Dandelionmood\LastFm\LastFm( $_ENV['LAST_FM_API_Key'], $_ENV['LAST_FM_API_Secret'] );
 
-$file_db = new PDO('sqlite:colour.sqlite3');
+$file_db = new PDO('sqlite:' . $_ENV['DATABASE_PATH']);
 
 
 // Inserts Last.fm artist

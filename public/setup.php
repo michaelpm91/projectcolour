@@ -1,7 +1,12 @@
 <?php
  
+  require '../vendor/autoload.php';
+
+  Dotenv::load("../");
+
   // Set default timezone
   date_default_timezone_set('UTC');
+ 
  
   try {
     /**************************************
@@ -10,7 +15,11 @@
     **************************************/
  
     // Create (connect to) SQLite database in file
-    $file_db = new PDO('sqlite:colour.sqlite3');
+    $db_directory = dirname($_ENV['DATABASE_PATH']);
+    if (!is_dir($db_directory)) {
+        mkdir($db_directory);
+    }
+    $file_db = new PDO('sqlite:' . $_ENV['DATABASE_PATH']);
     // Set errormode to exceptions
     $file_db->setAttribute(PDO::ATTR_ERRMODE, 
                             PDO::ERRMODE_EXCEPTION);
