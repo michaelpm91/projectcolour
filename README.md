@@ -4,7 +4,11 @@ A project that will attempt to visualise trends in album artwork in genre over t
 
 ##Instructions
 
+Copy .env.example to .env and input your Last.fm API key and secret
+
 To run "cd public &&  php -S localhost:8000
+
+Load localhost:8000/setup.php to setup the database
 
 You may need to install imagemagick
 
